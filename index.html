@@ -141,12 +141,12 @@
     canvas.height = window.innerHeight;
     var painting = false;
 
-    canvas.addEventListener('touchstart', startPosition);
-    canvas.addEventListener('touchmove', draw);
-    canvas.addEventListener('touchend', endPosition);
-    canvas.addEventListener('mousedown', startPosition);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', endPosition);
+    canvas.ontouchstart = startPosition;
+    canvas.ontouchmove = draw;
+    canvas.ontouchend = endPosition;
+    canvas.onmousedown = startPosition;
+    canvas.onmousemove = draw;
+    canvas.onmouseup = endPosition;
 
     function startPosition(e) {
         painting = true;
@@ -162,7 +162,7 @@
         if (!painting) return;
 
         var mouseX, mouseY;
-        if (e.type === 'touchmove' || e.type === 'touchstart' || e.type === 'touchend') {
+        if (e.type.includes('touch')) {
             e.preventDefault(); // 防止滚动页面
             mouseX = e.touches[0].clientX - canvas.offsetLeft;
             mouseY = e.touches[0].clientY - canvas.offsetTop;
