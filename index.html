@@ -174,6 +174,10 @@
         if (document.getElementById('eraser-toggle').checked) { // 如果橡皮擦复选框被勾选
             var eraserSize = document.getElementById('eraser-size-range').value;
             ctx.clearRect(mouseX - eraserSize / 2, mouseY - eraserSize / 2, eraserSize, eraserSize);
+        } else if (document.getElementById('mode-toggle').checked) { // 如果切换模式复选框被勾选
+            ctx.font = document.getElementById('font-size-range').value + 'px Arial';
+            ctx.fillStyle = document.getElementById('color-select').value;
+            ctx.fillText(document.getElementById('text-input').value, mouseX, mouseY);
         } else {
             ctx.lineWidth = document.getElementById('line-width-range').value;
             ctx.lineCap = 'round';
