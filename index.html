@@ -141,6 +141,9 @@
     canvas.height = window.innerHeight;
     var painting = false;
 
+    canvas.addEventListener('touchstart', startPosition);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', endPosition);
     canvas.addEventListener('mousedown', startPosition);
     canvas.addEventListener('mousemove', draw);
     canvas.addEventListener('mouseup', endPosition);
@@ -158,8 +161,15 @@
     function draw(e) {
         if (!painting) return;
 
-        var mouseX = e.clientX - canvas.offsetLeft;
-        var mouseY = e.clientY - canvas.offsetTop;
+        var mouseX, mouseY;
+        if (e.type === 'touchmove' || e.type === 'touchstart' || e.type === 'touchend') {
+            e.preventDefault(); // 防止滚动页面
+            mouseX = e.touches[0].clientX - canvas.offsetLeft;
+            mouseY = e.touches[0].clientY - canvas.offsetTop;
+        } else {
+            mouseX = e.clientX - canvas.offsetLeft;
+            mouseY = e.clientY - canvas.offsetTop;
+        }
 
         if (document.getElementById('eraser-toggle').checked) { // 如果橡皮擦复选框被勾选
             var eraserSize = document.getElementById('eraser-size-range').value;
